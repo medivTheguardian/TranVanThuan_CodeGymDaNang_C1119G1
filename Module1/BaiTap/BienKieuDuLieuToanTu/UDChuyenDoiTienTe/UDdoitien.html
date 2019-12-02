@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <input type="text" name="Amount" id="amount">
+    <select id="gt1">
+        <option value="VND">VND</option>
+        <option value="USD">USA</option>
+    </select>
+    <select id="gt2">
+        <option value="VND">VND</option>
+        <option value="USD">USA</option>
+    </select>
+    <button onclick="submit()">Convert</button>
+
+
+<script>
+
+    let amount = document.getElementById("amount");
+    let gt1 = document.getElementById("gt1");
+    let gt2 = document.getElementById("gt2");
+    let result;
+    function submit() {
+
+
+        if (gt1.value === "VND" && gt2.value === "USD") {
+            result = amount.value / 23000
+            alert(result + "$")
+        }
+        if (gt1.value === "USD" && gt2.value === "VND"){
+            result = amount.value*23000
+            alert(result + "VND")
+        }
+    }
+</script>
+</body>
+</html>
