@@ -1,5 +1,0 @@
-Begin
-  Input A
-  B=23000*A
-  Display B
-End
