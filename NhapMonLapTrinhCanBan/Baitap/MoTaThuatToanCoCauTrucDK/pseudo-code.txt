@@ -1,0 +1,8 @@
+Begin
+  Input A B C
+  max=A
+  IF ( B > max ) THEN max=B
+  IF ( C > max ) THEM max=C
+  End IF
+ Display max
+End

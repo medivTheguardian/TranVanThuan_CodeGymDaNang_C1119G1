@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Nhập bán kính hình tròn :</p>
+<input type="text" id="input">
+<input type="button" onclick="calculator()" value="Nhập">
+<div id="S"></div>
+<div id="C"></div>
+<script>
+    function calculator() {
+        let r = document.getElementById("input");
+        S = Math.pow(r.value * 1, 2) * Math.PI;
+        C = (r.value * 1) * 2 * Math.PI;
+        document.getElementById("S").innerText= "Diện tích hình tròn là : " + S
+        document.getElementById("C").innerText= "Chu vi hình tròn là : " + C
+    }
+</script>
+</body>
+</html>

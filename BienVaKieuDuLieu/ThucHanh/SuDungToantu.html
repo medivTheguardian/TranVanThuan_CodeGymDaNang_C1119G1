@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Nhập chiều dài của hình chữ nhật :</p>
+<input type="text" id="chieudai">
+<br>
+<p>Nhập chiều rộng của hình chữ nhật :</p>
+<input type="text" id="chieurong">
+<br>
+<button type="button" onclick="tinh()">Tính</button>
+<script>
+function tinh() {
+    document.write("Diện tích hình chữ nhật là : " + (document.getElementById("chieudai").value * 1) * (document.getElementById("chieurong").value * 1));
+}
+</script>
+</body>
+</html>
