@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="mes">
+<button onclick="submit()">Check!</button>
+<script>
+    let message = document.getElementById("mes");
+    function submit() {
+        switch (message.value) {
+            case "Employee":
+                document.write("Hello");
+                break;
+            case "Director":
+                document.write("Greetings");
+                break;
+            default:
+                document.write("Input your position");
+                break;
+        }
+    }
+
+</script>
+
+
+</body>
+</html>

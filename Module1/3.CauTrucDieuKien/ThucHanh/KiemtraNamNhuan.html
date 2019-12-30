@@ -8,17 +8,31 @@
 <p>Enter the year : </p>
 <input type="text" id="input">
 <br>
-<p><input type="button" onclick="check" value="Check!"></p>
+<p><input type="button" onclick="check()" value="Check!"></p>
+<p id="display"></p>
 <script>
     function check() {
         let yearInput = document.getElementById("input");
-        if ((yearInput.value*1)%4 === 0) {
-            if ((yearInput.value * 1) % 100 !== 0) {
-
+        let isLeapYear = false;
+        let isDivisibleBy4 = (yearInput.value * 1) % 4 == 0;
+        if (isDivisibleBy4) {
+            let isDivisibleBy100 = (yearInput.value * 1) % 100 == 0;
+            if (isDivisibleBy100) {
+                let isDivisibleby400 = (yearInput.value * 1) % 400 == 0;
+                if (isDivisibleby400) {
+                    isLeapYear = true;
+                }
+            } else {
+                isLeapYear = true;
             }
         }
-    }
+        if (isLeapYear) {
+            document.getElementById("display").innerHTML = yearInput.value + " is a Leap year";
+        } else {
+            document.getElementById("display").innerHTML = yearInput.value + " is NOT a Leap year";
+        }
 
+    }
 </script>
 </body>
 </html>
