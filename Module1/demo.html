@@ -5,34 +5,19 @@
     <title></title>
 </head>
 <body>
-<input type="text" id="txtValue">
-<input type="button" id="btnAdd" value="Thêm các chuỗi vào" onclick="add_element_to_array();">
-<input type="button" id="btnUp" value="Đổi chữ" onclick="chuhoa();">
+<input  id="soLieu" oninput="footToMeter(this.value)" onchange="footToMeter(this.value)" placeholder="Nhập feet"/>
+<input id="soLieu2" oninput="meterToFeet(this.value)" onchange="meterToFeet(this.value)" placeholder="Nhập meter"/>
+<p>Đổi từ feet sang meter: <span id="output"></span></p>
+<p>Đổi từ meter sang feed: <span id="output1"></span></p>
 <script>
-    var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var LOWER = 'abcdefghijklmnopqrstuvwxyz';
-    var result = '';
-    let x = 0;
-    let array = Array();
-    function add_element_to_array() {
-        array[x] = document.getElementById("txtValue").value;
-        alert("Giá trị " + array[x] + " được thêm vào vị trí " + x);
-        x++;
-        document.getElementById("txtValue ").value ="";
+    function footToMeter(x) {
+        x=parseFloat(x);
+        document.getElementById('output').innerHTML=x*3.279;
     }
-    function chuhoa() {
-        for (var i = 0; i < array.length; i++) {
-            for (var j = 0; j <= (array[i].length) - 1; j++) {
-                if (UPPER.indexOf(array[i].charAt(j)) !== -1) {
-                    result=result+(array[i].charAt(j)).toLowerCase();
-                } else if (LOWER.indexOf(array[i].charAt(j)) !== -1) {
-                    result=result+(array[i].charAt(j)).toUpperCase();
-                } else {
-                    result=result+(array[i].charAt(j))
-                }
-            }
-            document.write(result);
-        }}
+    function meterToFeet(x) {
+        x=parseFloat(x);
+        document.getElementById('output1').innerHTML=x*0.305;
+    }
 </script>
 </body>
 </html>
