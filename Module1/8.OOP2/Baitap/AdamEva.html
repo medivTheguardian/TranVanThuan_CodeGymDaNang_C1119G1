@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<script>
+    class Apple {
+        constructor(name) {
+            this.name = name;
+            this.weight = 10;
+        }
+
+        decreseWeight = function () {
+            if (this.weight > 0) {
+                this.weight--;
+            }
+
+        };
+        runOut = function () {
+            return false;
+
+        };
+        getWeight = function () {
+            return this.weight;
+        };
+    }
+
+    class Human {
+        constructor(name, weight) {
+            this.name = name;
+            this.gender = true;
+            this.weight = weight;
+        }
+
+        getGender = function () {
+            return this.gender;
+
+        };
+        setGender = function (gender) {
+            this.gender = gender;
+
+
+        };
+        talk = function (message) {
+            document.write(message);
+        };
+        checkApple = function (apple) {
+            return apple.weight > 0;
+
+        };
+        eatAplle = function (apple, human) {
+            if (this.checkApple(apple)) {
+                apple.decreseWeight();
+                human.weight += 0.02;
+            }
+
+
+        };
+    }
+
+    function displayInfo(object) {
+
+        document.writeln("<br>");
+        document.writeln(object.name.bold() + "<br>")
+        document.writeln("Name : " + object.name + "<br>");
+        document.writeln("Weight: " + object.weight + "kg" + "<br>");
+        if (object.gender) {
+            document.writeln("Gender : Male" + "<br>");
+        } else {
+            document.writeln("Gender : Female" + "<br>");
+        }
+    }
+
+    let redApple = new Apple("RedApple");
+    let a = "Apple";
+    document.writeln(a.bold() + "<br>");
+    document.writeln("Name : " + redApple.name + "<br>");
+    document.writeln("Weight : " + redApple.weight * 20 + "g" + "<br>");
+    let adam = new Human("Adam", 60);
+    displayInfo(adam);
+    let eva = new Human("Eva", 45);
+    eva.setGender(false);
+    displayInfo(eva);
+
+
+    function submit() {
+        for (let i = 1; i <= 10; i++) {
+            if (i % 2 === 0) {
+                adam.eatAplle(redApple, adam);
+                adam.talk("Adam cạp một miếng" + "<br>");
+                document.writeln("Quả táo còn " + (redApple.weight * 20) + " g" + "<br>");
+                document.writeln("Cân nặng của Adam hiện tại là " + adam.weight.toFixed(2) + "kg" + "<br>")
+            } else {
+                eva.eatAplle(redApple, eva);
+                eva.talk("Eva đớp một miếng" + "<br>");
+                document.writeln("Quả táo còn " + (redApple.weight * 20) + " g" + "<br>");
+                document.writeln("Cân nặng của Eva hiện tại là " + eva.weight.toFixed(2) + "kg" + "<br>")
+            }
+        }
+        document.writeln("Hết táo rồi hai đứa bây !!!")
+    }
+
+</script>
+<div>
+    <button class="btn btn-outline-danger" onclick="submit()">Let's Eat Apple Together</button>
+</div>
+</body>
+
+</html>
