@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="FuramaResort" target="1.5" />
+      <module name="FuramaResort" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

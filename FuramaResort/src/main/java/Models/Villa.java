@@ -48,13 +48,14 @@ public class Villa extends Services {
         this.poolArea = poolArea;
     }
 
-    public int getNumbersOfFloor() {
+    public int getNumberOfFloor() {
         return numberOfFloor;
     }
 
-    public void setNumbersOfFloor(int numbersOfFloor) {
+    public void setNumberOfFloor(int numbersOfFloor) {
         this.numberOfFloor = numbersOfFloor;
     }
+
 
     @Override
     public String showInfor() {
