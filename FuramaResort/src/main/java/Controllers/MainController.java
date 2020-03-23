@@ -1,10 +1,13 @@
 package Controllers;
 
-import Models.Customer;
+import Commons.CSVfile;
+import Models.*;
 import Service.CustomerService;
 import Service.ResortService;
+import Sort.NameCustomerComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -162,88 +165,93 @@ public class MainController {
     }
 
     private void addNewBooking() {
-        List<Customer> listCustomers = new ArrayList<>();
-        int selectedOption;
-        System.out.println("Choose the customer: ");
-        for (Customer customer : listCustomers) {
-            System.out.println(listCustomers.indexOf(customer) + ": " + customer.getFullName());
+        Scanner scanner = new Scanner(System.in);
+        List<Customer> customers = new ArrayList<>();
+        CSVfile csVfile = new CSVfile();
+        customers = csVfile.readCustomerCsv();
+        Collections.sort(customers, new NameCustomerComparator());
+        for (Customer customer : customers) {
+            System.out.println(".................................");
+            System.out.println(customers.indexOf(customer) + ": " + customer.showInfo());
         }
-        selectedOption = scanner.nextInt();
-        Customer selectedCustomer = null;
-        if (selectedCustomer >= listCustomers.size()) {
-            System.out.println("out of size.");
+
+        System.out.println("Choose the customer: ");
+        int selectedOption = scanner.nextInt();
+        Customer customer = null;
+        if (selectedOption < 0 || selectedOption >= customers.size()) {
+            System.out.println("No Customer!!!");
             addNewBooking();
         } else {
-            selectedCustomer = listCustomers.get(selectedOption);
+            customer = customers.get(selectedOption);
         }
-        selectedCustomer = menu.displayBookingMenu();
-        Models.Service selectedService = null;
-        switch (choice) {
-            case 1:
-                List<Villa> villas = resortServices.getVillas();
-                if (villas.size() == 0) {
-                    System.out.println("List villa is empty.");
-                    addNewBooking();
+
+
+        CSVfile readFileCSV = new CSVfile();
+        Services service = null;
+        System.out.println("1. Booking Villa\n2. Booking House \n3. Booking Room");
+        int choose = scanner.nextInt();
+        switch (choose) {
+            case 1: {
+                List<Villa> villas;
+                villas = csVfile.readVillaCsv();
+                for (int i = 0; i < villas.size(); i++) {
+                    System.out.println(".................................");
+                    System.out.println("No: " + i);
+                    System.out.println(villas.get(i).showInfor());
                 }
-                for (Villa villa : villas) {
-                    System.out.println(villas.indexOf(villa) + ": " + villa.getServiceName());
-                }
-                choice = scanner.nextInt();
-                if (choice > villas.size()) {
-                    System.out.println("out of size.");
-                    addNewBooking();
-                } else {
-                    selectedService = villas.get(choice);
-                }
+                System.out.println("Enter choice booking villa: ");
+                int index = scanner.nextInt();
+                Villa villa = villas.get(index);
+                customer.setServices(villa);
+                service = villas.get(index);
                 break;
-            case 2:
-                List<House> houses = resortServices.getHouses();
-                if (houses.size() == 0) {
-                    System.out.println("List house is empty.");
-                    addNewBooking();
+            }
+            case 2: {
+                List<House> houses;
+                houses = csVfile.readHouseCsv();
+                for (int i = 0; i < houses.size(); i++) {
+                    System.out.println(".................................");
+                    System.out.println("No: " + i);
+                    System.out.println(houses.get(i).showInfor());
                 }
-                for (House house : houses) {
-                    System.out.println(houses.indexOf(house) + ": " + house.getServiceName());
-                }
-                choice = scanner.nextInt();
-                if (choice > houses.size()) {
-                    System.out.println("out of size.");
-                    addNewBooking();
-                } else {
-                    selectedService = houses.get(choice);
-                }
+                System.out.println("Enter choice booking house: ");
+                int index = scanner.nextInt();
+                House house = houses.get(index);
+                customer.setServices(house);
+                service = houses.get(index);
                 break;
-            case 3:
-                List<Room> rooms = resortServices.getRooms();
-                if (rooms.size() == 0) {
-                    System.out.println("List room is empty.");
-                    addNewBooking();
+            }
+            case 3: {
+                List<Room> rooms;
+                rooms = csVfile.readRoomCsv();
+                for (int i = 0; i < rooms.size(); i++) {
+                    System.out.println(".................................");
+                    System.out.println("No: " + i);
+                    System.out.println(rooms.get(i).showInfor());
                 }
-                for (Room room : rooms) {
-                    System.out.println(rooms.indexOf(room) + ": " + room.getServiceName());
-                }
-                choice = scanner.nextInt();
-                if (choice > rooms.size()) {
-                    System.out.println("out of size.");
-                    addNewBooking();
-                } else {
-                    selectedService = rooms.get(choice);
-                }
+                System.out.println("Enter choice booking room: ");
+                int index = scanner.nextInt();
+                Room room = rooms.get(index);
+                customer.setServices(room);
+                service = rooms.get(index);
                 break;
-            default:
-                System.out.println("There is not this option.");
+            }
+            default: {
+                displayMainMenu();
+            }
+
         }
-        assert selectedCustomer != null;
-        List<Booking> bookings = readWriteCSV.readFileBookingCSV();
-        Booking newBooking = new Booking();
-        newBooking.setIdCustomer(selectedCustomer.getId());
-        newBooking.setCustomerName(selectedCustomer.getNameCustomer());
-        assert selectedService != null;
-        newBooking.setIdService(selectedService.getId());
-        newBooking.setServiceName(selectedService.getServiceName());
-        bookings.add(newBooking);
-        readWriteCSV.writeBookingToCSVFile(bookings);
+        List<Booking> arrayListBooking = new ArrayList<>();
+        Booking booking = new Booking();
+        booking.setIdCustomer(customer.getId());
+        booking.setCustomerName(customer.getFullName());
+        booking.setIdService(service.getId());
+        booking.setServiceName(service.getServicesName());
+        arrayListBooking.add(booking);
+        csVfile.writeBookingCsv(arrayListBooking);
         displayMainMenu();
+
+
     }
 
 

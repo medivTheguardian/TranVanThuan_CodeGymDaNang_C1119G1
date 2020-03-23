@@ -102,6 +102,14 @@ public class Customer {
         this.address = address;
     }
 
+    public Services getServices() {
+        return services;
+    }
+
+    public void setServices(Services services) {
+        this.services = services;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +

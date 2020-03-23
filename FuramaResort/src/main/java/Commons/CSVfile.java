@@ -1,9 +1,6 @@
 package Commons;
 
-import Models.Customer;
-import Models.House;
-import Models.Room;
-import Models.Villa;
+import Models.*;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBean;
@@ -23,12 +20,15 @@ public class CSVfile {
     private final String HOUSE_FILE_DATA = "src/main/java/Data/HouseData.csv";
     private final String ROOM_FILE_DATA = "src/main/java/Data/RoomData.csv";
     private final String CUSTOMER_FILE_DATA = "src/main/java/Data/CustomerData.csv";
+    private final String BOOKING_FILE_DATA = "src/main/java/Data/BookingData.csv";
+
 
 
     private final String[] VILLA_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "roomStandard", "description", "poolArea", "numberOfFloor"};
     private final String[] HOUSE_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "roomStandard", "description", "numberOfFloor"};
     private final String[] ROOM_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "freeServices"};
     private final String[] CUSTOMER_HEADER = {"id", "fullName", "birthday", "gender", "idCard", "phoneNumber", "email", "customerType", "address"};
+    private final String[] BOOKING_HEADER = {"idCustomer","customerName","idService","serviceName"};
 
 
     //CSVReadAndWrite for Villa
@@ -316,6 +316,75 @@ public class CSVfile {
             csvReader = new CSVReader(new FileReader(CUSTOMER_FILE_DATA));
             CsvToBean<Customer> csvToBean = new CsvToBean<>();
             List<Customer> list = csvToBean.parse(strategy, csvReader);
+            return list;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    //CSVReadAndWrite for Customer
+    public void writeBookingCsv(List<Booking> bookings) {
+
+
+        CSVWriter csvWriter = null;
+        List<String[]> bookingList = new ArrayList<String[]>();
+
+
+        try {
+            csvWriter = new CSVWriter(new FileWriter(BOOKING_FILE_DATA));
+            csvWriter.writeNext(BOOKING_HEADER);
+
+
+            for (Booking booking : bookings) {
+
+                String[] tempArray = new String[]{
+                        booking.getIdCustomer(),
+                        booking.getCustomerName(),
+                        booking.getIdService() + "",
+                        booking.getServiceName()
+
+                };
+
+                bookingList.add(tempArray);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                csvWriter.writeAll(bookingList);
+                csvWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public List<Booking> readBookingCsv() {
+
+        CSVReader csvReader = null;
+        Map<String, String> map = new HashMap<>();
+
+
+        try {
+
+            for (String property : BOOKING_HEADER) {
+                map.put(property, property);
+            }
+
+            HeaderColumnNameTranslateMappingStrategy strategy = new HeaderColumnNameTranslateMappingStrategy();
+            strategy.setType(Booking.class);
+            strategy.setColumnMapping(map);
+
+            csvReader = new CSVReader(new FileReader(BOOKING_FILE_DATA));
+            CsvToBean<Booking> csvToBean = new CsvToBean<>();
+            List<Booking> list = csvToBean.parse(strategy, csvReader);
             return list;
 
         } catch (FileNotFoundException e) {
