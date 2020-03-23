@@ -1,5 +1,6 @@
 package Commons;
 
+import Models.Customer;
 import Models.House;
 import Models.Room;
 import Models.Villa;
@@ -18,14 +19,16 @@ import java.util.List;
 import java.util.Map;
 
 public class CSVfile {
-    private final String VILLA_FILE_DATA = "src/main/java/data/VillaData.csv";
-    private final String HOUSE_FILE_DATA = "src/main/java/data/HouseData.csv";
-    private final String ROOM_FILE_DATA = "src/main/java/data/RoomData.csv";
+    private final String VILLA_FILE_DATA = "src/main/java/Data/VillaData.csv";
+    private final String HOUSE_FILE_DATA = "src/main/java/Data/HouseData.csv";
+    private final String ROOM_FILE_DATA = "src/main/java/Data/RoomData.csv";
+    private final String CUSTOMER_FILE_DATA = "src/main/java/Data/CustomerData.csv";
 
 
     private final String[] VILLA_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "roomStandard", "description", "poolArea", "numberOfFloor"};
     private final String[] HOUSE_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "roomStandard", "description", "numberOfFloor"};
     private final String[] ROOM_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "freeServices"};
+    private final String[] CUSTOMER_HEADER = {"id", "fullName", "birthday", "gender", "idCard", "phoneNumber", "email", "customerType", "address"};
 
 
     //CSVReadAndWrite for Villa
@@ -83,7 +86,7 @@ public class CSVfile {
         try {
 
             for (String property : VILLA_HEADER) {
-                map.put(property,property);
+                map.put(property, property);
             }
 
             HeaderColumnNameTranslateMappingStrategy strategy = new HeaderColumnNameTranslateMappingStrategy();
@@ -158,7 +161,7 @@ public class CSVfile {
         try {
 
             for (String property : HOUSE_HEADER) {
-                map.put(property,property);
+                map.put(property, property);
             }
 
             HeaderColumnNameTranslateMappingStrategy strategy = new HeaderColumnNameTranslateMappingStrategy();
@@ -230,7 +233,7 @@ public class CSVfile {
         try {
 
             for (String property : ROOM_HEADER) {
-                map.put(property,property);
+                map.put(property, property);
             }
 
             HeaderColumnNameTranslateMappingStrategy strategy = new HeaderColumnNameTranslateMappingStrategy();
@@ -240,6 +243,79 @@ public class CSVfile {
             csvReader = new CSVReader(new FileReader(ROOM_FILE_DATA));
             CsvToBean<Room> csvToBean = new CsvToBean<>();
             List<Room> list = csvToBean.parse(strategy, csvReader);
+            return list;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    //CSVReadAndWrite for Customer
+    public void writeCustomerCsv(List<Customer> customers) {
+
+
+        CSVWriter csvWriter = null;
+        List<String[]> customerList = new ArrayList<String[]>();
+
+
+        try {
+            csvWriter = new CSVWriter(new FileWriter(CUSTOMER_FILE_DATA));
+            csvWriter.writeNext(CUSTOMER_HEADER);
+
+
+            for (Customer customer : customers) {
+
+                String[] tempArray = new String[]{
+                        customer.getId(),
+                        customer.getFullName(),
+                        customer.getBirthday() + "",
+                        customer.getGender() + "",
+                        customer.getIdCard() + "",
+                        customer.getPhoneNumber(),
+                        customer.getEmail(),
+                        customer.getCustomerType(),
+                        customer.getAddress(),
+
+                };
+                customerList.add(tempArray);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                csvWriter.writeAll(customerList);
+                csvWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public List<Customer> readCustomerCsv() {
+
+        CSVReader csvReader = null;
+        Map<String, String> map = new HashMap<>();
+
+
+        try {
+
+            for (String property : CUSTOMER_HEADER) {
+                map.put(property, property);
+            }
+
+            HeaderColumnNameTranslateMappingStrategy strategy = new HeaderColumnNameTranslateMappingStrategy();
+            strategy.setType(Customer.class);
+            strategy.setColumnMapping(map);
+
+            csvReader = new CSVReader(new FileReader(CUSTOMER_FILE_DATA));
+            CsvToBean<Customer> csvToBean = new CsvToBean<>();
+            List<Customer> list = csvToBean.parse(strategy, csvReader);
             return list;
 
         } catch (FileNotFoundException e) {

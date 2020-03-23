@@ -3,6 +3,7 @@ package Models;
 import java.util.Date;
 
 public class Customer {
+    private String id;
     private String fullName;
     private String birthday;
     private String gender;
@@ -16,7 +17,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String fullName, String birthday, String gender, String idCard, String phoneNumber, String email, String customerType, String address) {
+    public Customer(String id, String fullName, String birthday, String gender, String idCard, String phoneNumber, String email, String customerType, String address) {
+        this.id = id;
         this.fullName = fullName;
         this.birthday = birthday;
         this.gender = gender;
@@ -25,6 +27,15 @@ public class Customer {
         this.email = email;
         this.customerType = customerType;
         this.address = address;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -91,5 +102,33 @@ public class Customer {
         this.address = address;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "fullName='" + fullName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", gender='" + gender + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", customerType='" + customerType + '\'' +
+                ", address='" + address + '\'' +
+                ", services=" + services +
+                '}';
+    }
+
+
+    public String showInfo() {
+        return "IdCustomer: " + id + "\n" +
+                "NameCustomer: " + fullName + "\n" +
+                "IdCard: " + idCard + "\n" +
+                "Birthday: " + birthday + "\n" +
+                "Gender: " + gender + "\n" +
+                "PhoneNumber: " + phoneNumber + "\n" +
+                "Email: " + email + "\n" +
+                "TypeCustomer: " + customerType + "\n" +
+                "Address: " + address + "\n";
+    }
 }
+
+
