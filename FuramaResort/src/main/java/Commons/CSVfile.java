@@ -21,6 +21,8 @@ public class CSVfile {
     private final String ROOM_FILE_DATA = "src/main/java/Data/RoomData.csv";
     private final String CUSTOMER_FILE_DATA = "src/main/java/Data/CustomerData.csv";
     private final String BOOKING_FILE_DATA = "src/main/java/Data/BookingData.csv";
+    private final String EMPLOYEE_FILE_DATA = "src/main/java/Data/EmployeeData.csv";
+
 
 
 
@@ -29,6 +31,8 @@ public class CSVfile {
     private final String[] ROOM_HEADER = {"id", "serviceNsame", "area", "fee", "numbersOfPeople", "rentType", "freeServices"};
     private final String[] CUSTOMER_HEADER = {"id", "fullName", "birthday", "gender", "idCard", "phoneNumber", "email", "customerType", "address"};
     private final String[] BOOKING_HEADER = {"idCustomer","customerName","idService","serviceName"};
+    private final String[] EMPLOYEE_HEADER = {"idEmployee","nameEmployee","addressEmployee","ageEmployee"};
+
 
 
     //CSVReadAndWrite for Villa
@@ -326,7 +330,7 @@ public class CSVfile {
 
     }
 
-    //CSVReadAndWrite for Customer
+    //CSVReadAndWrite for Booking
     public void writeBookingCsv(List<Booking> bookings) {
 
 
@@ -394,6 +398,76 @@ public class CSVfile {
 
 
     }
+
+    //CSVReadAndWrite for Employee
+    public void writeEmployeeCsv(List<Employee> employees) {
+
+
+        CSVWriter csvWriter = null;
+        List<String[]> employeeList = new ArrayList<String[]>();
+
+
+        try {
+            csvWriter = new CSVWriter(new FileWriter(EMPLOYEE_FILE_DATA));
+            csvWriter.writeNext(EMPLOYEE_HEADER);
+
+
+            for (Employee employee : employees) {
+
+                String[] tempArray = new String[]{
+                        employee.getIdEmployee(),
+                        employee.getNameEmployee(),
+                        employee.getAddressEmployee() + "",
+                        employee.getAgeEmployee()
+
+                };
+
+                employeeList.add(tempArray);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                csvWriter.writeAll(employeeList);
+                csvWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public List<Employee> readEmployeeCsv() {
+
+        CSVReader csvReader = null;
+        Map<String, String> map = new HashMap<>();
+
+
+        try {
+
+            for (String property : EMPLOYEE_HEADER) {
+                map.put(property, property);
+            }
+
+            HeaderColumnNameTranslateMappingStrategy strategy = new HeaderColumnNameTranslateMappingStrategy();
+            strategy.setType(Employee.class);
+            strategy.setColumnMapping(map);
+
+            csvReader = new CSVReader(new FileReader(EMPLOYEE_FILE_DATA));
+            CsvToBean<Employee> csvToBean = new CsvToBean<>();
+            List<Employee> list = csvToBean.parse(strategy, csvReader);
+            return list;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
 
 
 }

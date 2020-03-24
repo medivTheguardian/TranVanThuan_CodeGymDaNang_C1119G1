@@ -8,22 +8,30 @@ import Validation.ServiceValidation;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ResortService {
     private Scanner scanner;
     private ServiceValidation serviceValidation;
     private CSVfile csVfile;
+    private List<Villa> villaList;
+    private List<House> houseList;
+    private List<Room> roomList;
 
     public ResortService() {
         scanner = new Scanner(System.in);
         serviceValidation = new ServiceValidation();
         csVfile = new CSVfile();
+        villaList = csVfile.readVillaCsv();
+        houseList = csVfile.readHouseCsv();
+        roomList = csVfile.readRoomCsv();
+
     }
 
     public void addListVilla() {
         String inputID;
         Villa villa = new Villa();
-        List<Villa> villaList = csVfile.readVillaCsv();
 
         System.out.println("Enter Id:");
         inputID = scanner.nextLine();
@@ -46,7 +54,6 @@ public class ResortService {
     public void addListHouse() {
         String inputID;
         House house = new House();
-        List<House> houseList = csVfile.readHouseCsv();
 
         System.out.println("Enter Id:");
         inputID = scanner.nextLine();
@@ -69,7 +76,6 @@ public class ResortService {
     public void addListRoom() {
         String inputID;
         Room room = new Room();
-        List<Room> roomList = csVfile.readRoomCsv();
 
         System.out.println("Enter Id:");
         inputID = scanner.nextLine();
@@ -87,7 +93,6 @@ public class ResortService {
 
 
     public void showVillaService() {
-        List<Villa> villaList = csVfile.readVillaCsv();
 
         for (Villa villa : villaList) {
             System.out.println(villa.showInfor());
@@ -95,17 +100,39 @@ public class ResortService {
         }
     }
     public void showHouseList() {
-        List<House> houseList = csVfile.readHouseCsv();
 
         for (House house : houseList) {
             System.out.println(house.showInfor());
         }
     }
     public void showRoomList() {
-        List<Room> roomList = csVfile.readRoomCsv();
 
         for (Room room : roomList) {
             System.out.println(room.showInfor());
+        }
+    }
+
+    public void showAllVillaNotDuplicate() {
+        Set<Villa> villaTreeSet = new TreeSet<>(villaList);
+        for (Villa villa : villaTreeSet) {
+            System.out.println("--------------------------------------------------");
+            System.out.println(villa.getServicesName());
+        }
+    }
+
+    public void showAllHouseNotDuplicate() {
+        Set<House> houseTreeSet = new TreeSet<>(houseList);
+        for (House house : houseTreeSet) {
+            System.out.println("--------------------------------------------------");
+            System.out.println(house.getServicesName());
+        }
+    }
+
+    public void showAllRoomNotDuplicate() {
+        Set<Room> roomTreeSet = new TreeSet<>(roomList);
+        for (Room room : roomTreeSet) {
+            System.out.println("--------------------------------------------------");
+            System.out.println(room.getServicesName());
         }
     }
 }

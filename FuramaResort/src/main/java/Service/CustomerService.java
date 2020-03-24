@@ -3,10 +3,8 @@ package Service;
 import Commons.CSVfile;
 import CustomerException.*;
 import Models.Customer;
-import Models.Villa;
 import Validation.CustomerValidation;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +20,7 @@ public class CustomerService {
 
     }
 
-    public void addNewCustomer() {
+    public Customer addNewCustomer() {
         String inputID;
         Customer customer = new Customer();
         List<Customer> customerList = csVfile.readCustomerCsv();
@@ -65,6 +63,8 @@ public class CustomerService {
         customerList.add(customer);
         csVfile.writeCustomerCsv(customerList);
 
+
+        return customer;
     }
 
     public void showInfoCustomer() {

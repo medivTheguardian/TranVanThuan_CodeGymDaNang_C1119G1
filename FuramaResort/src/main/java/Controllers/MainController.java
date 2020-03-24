@@ -2,20 +2,28 @@ package Controllers;
 
 import Commons.CSVfile;
 import Models.*;
+import Service.CinemaService;
 import Service.CustomerService;
 import Service.ResortService;
 import Sort.NameCustomerComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainController {
-    private Scanner scanner = new Scanner(System.in);
-    ResortService resortService = new ResortService();
-    CustomerService customerService = new CustomerService();
+    private Scanner scanner;
+    private ResortService resortService;
+    private CustomerService customerService;
+    private CinemaService cinemaService;
+    private CSVfile csVfile;
 
+    public MainController() {
+        scanner = new Scanner(System.in);
+        resortService = new ResortService();
+        customerService = new CustomerService();
+        cinemaService = new CinemaService();
+        csVfile = new CSVfile();
+
+    }
 
     public void displayMainMenu() {
         int selectOption;
@@ -48,19 +56,22 @@ public class MainController {
                 break;
             }
             case 5: {
-//                addNewBooking();
+                addNewBooking();
                 break;
             }
             case 6: {
-//                showInformationEmployee();
+                showInfomationEmployee();
+                displayMainMenu();
                 break;
             }
             case 7: {
-//                addBookingCinema();
+                cinemaService.bookingTicketCinema();
+                displayMainMenu();
                 break;
             }
             case 8: {
-//                showBookingCinema();
+                cinemaService.showBookingCinema();
+                displayMainMenu();
                 break;
             }
             case 9: {
@@ -141,18 +152,18 @@ public class MainController {
                 menuShowService();
                 break;
             }
-//            case 4: {
-//                showAllNameVillaNotDuplicate();
-//                break;
-//            }
-//            case 5: {
-//                showAllNameHouseNotDuplicate();
-//                break;
-//            }
-//            case 6: {
-//                showAllNameRoomNotDuplicate();
-//                break;
-//            }
+            case 4: {
+                resortService.showAllVillaNotDuplicate();
+                break;
+            }
+            case 5: {
+                resortService.showAllHouseNotDuplicate();
+                break;
+            }
+            case 6: {
+                resortService.showAllRoomNotDuplicate();
+                break;
+            }
 
             case 7: {
                 displayMainMenu();
@@ -186,7 +197,7 @@ public class MainController {
         }
 
 
-        CSVfile readFileCSV = new CSVfile();
+
         Services service = null;
         System.out.println("1. Booking Villa\n2. Booking House \n3. Booking Room");
         int choose = scanner.nextInt();
@@ -252,6 +263,18 @@ public class MainController {
         displayMainMenu();
 
 
+    }
+
+    public void showInfomationEmployee() {
+        List<Employee> employeeList = csVfile.readEmployeeCsv();
+        Map<String,Employee> employeeMap = new HashMap<>();
+        for (Employee employee : employeeList) {
+            employeeMap.put(employee.getIdEmployee(),employee);
+        }
+        for (Map.Entry<String, Employee> entry : employeeMap.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue().toString());
+            System.out.println("...............................");
+        }
     }
 
 
