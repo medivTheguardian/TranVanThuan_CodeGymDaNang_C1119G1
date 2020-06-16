@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Employee</title>
+</head>
+<body>
+<h1>Delete Employee</h1>
+<form action="/delete/" th:object="${employee}" method="post">
+    <input type="hidden" name="id" th:field="*{id}">
+
+    <table>
+        <tr>
+            <td>Employee Id:</td>
+            <td><input th:field="*{id}"></td>
+        </tr>
+        <tr>
+            <td>Employee Department:</td>
+            <td><input th:field="*{department}"></td>
+        </tr>
+        <tr>
+            <td>Employee Name:</td>
+            <td><input th:field="*{employeeName}"></td>
+        </tr>
+        <tr>
+            <td>Birthday:</td>
+            <td><input th:field="*{birthday}"></td>
+        </tr>
+        <tr>
+            <td>Gender:</td>
+            <td><input th:field="*{gender}"></td>
+        </tr>
+        <tr>
+            <td>Phone Number:</td>
+            <td><input th:field="*{phoneNumber}"></td>
+        </tr>
+        <tr>
+            <td>Identyti Number:</td>
+            <td><input th:field="*{identityCard}"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input th:field="*{email}"></td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td><textarea th:field="*{address}"></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Delete"></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
